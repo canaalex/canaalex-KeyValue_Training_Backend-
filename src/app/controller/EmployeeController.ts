@@ -7,6 +7,7 @@ import { CreateEmployeeDto } from "../dto/CreateEmployeedto";
 import validationMiddleware  from "../middleware/validationMiddleware";
 import authorize from "../middleware/Authorize";
 import {CreateEmployeeAddressDto }from "../dto/CreateEmployeeAddress";
+import {UpdateEmployeeDto }from "../dto/UpdateEmployee";
 
 class EmployeeController extends AbstractController {
   constructor(private employeeService: EmployeeService) {
@@ -22,7 +23,7 @@ class EmployeeController extends AbstractController {
     this.router.post(`${this.path}`, authorize(Object.values([Roles.Admin,Roles.HR])),validationMiddleware(CreateEmployeeDto,APP_CONSTANTS.body),this.postallemployees);
     this.router.post(`${this.path}/address`, authorize(Object.values([Roles.Admin,Roles.HR])),validationMiddleware(CreateEmployeeAddressDto,APP_CONSTANTS.body),this.postallemployeeadress);
     this.router.get(`${this.path}/:id`, authorize(Object.values(Roles)),this.getbyID);
-    this.router.put(`${this.path}/:id`, authorize(Object.values([Roles.Admin,Roles.HR])),this.updatebyID);
+    this.router.put(`${this.path}/:id`, authorize(Object.values([Roles.Admin,Roles.HR])),validationMiddleware(UpdateEmployeeDto,APP_CONSTANTS.body),this.updatebyID);
     this.router.delete(`${this.path}/:id`, authorize(Object.values([Roles.Admin,Roles.HR])),this.deletebyID);
     this.router.post(
       `${this.path}/login`,
@@ -106,3 +107,18 @@ class EmployeeController extends AbstractController {
 }
 
 export default EmployeeController;
+// {
+    
+//   "id" : "27915ff5-491e-4e38-b537-4eedb09facf8",
+//   "name": "riya",
+//   "departmentId":"995ac6ce-ed90-408a-adb5-c49d8d7d7241",
+//   "age":45,
+//   "password":"1234",
+//   "employeeadress":"hasch",
+//   "role":"admin",
+//   "employeeaddressID":"ba89fcde-3701-42b2-ba45-0a6414e05ea5"
+
+
+
+// }
+  

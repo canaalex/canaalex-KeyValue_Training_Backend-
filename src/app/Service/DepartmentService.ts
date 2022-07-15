@@ -5,6 +5,7 @@ import { ErrorCodes } from "../util/errorCode";
 import bcrypt from "bcrypt";
 import { plainToClass } from "class-transformer";
 import HttpException from "../exception/HttpException";
+import { UpdateDepartmentDto } from "../dto/UpdateDepartment";
 
 export class DepartmentService{
     
@@ -24,9 +25,30 @@ export class DepartmentService{
         }
         return result
            }  
-    async updatebyID(emp:any){
-        return await this.departmentRepo.updatebyID(emp);
-    }       
+           async updatebyID(emp:UpdateDepartmentDto){
+            // return await this.employeerepo.updatebyID(emp);
+             try{
+               const newEmployee = plainToClass(Department,{
+                 name: emp.name,
+                 id: emp.id,
+                
+
+
+
+               });
+               const result = await this.departmentRepo.getbyID(newEmployee.id);
+               if(!result)
+               {
+                 throw new EntityNotFoundException ( ErrorCodes.USER_WITH_ID_NOT_FOUND)
+               }
+               const save = await this.departmentRepo.updatebyID(newEmployee);
+               return save
+             }
+             
+               catch (err) {
+               throw new HttpException(400, "Failed to create department","failed");
+           }
+         }    
     async deletebyID(id:string){
         return await this.departmentRepo.deletebyID(id);
         }  

@@ -19,7 +19,7 @@ export class DepartmentRespository{
         name:"frontend"
        });
    }
-   async updatebyID(dept:any){
+   async updatebyID(dept:Department){
         
     const departmentRepo = getConnection().getRepository(Department);
     const employee = await departmentRepo.findOne({ id: dept.id})

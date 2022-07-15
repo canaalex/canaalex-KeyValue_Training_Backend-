@@ -48,11 +48,10 @@ export class EmployeeRespository{
 
 
 }
-async updatebyID(emp:any){
+async updatebyID(emp:Employee){
         
     const employeeRepo = getConnection().getRepository(Employee);
-    const employee = await employeeRepo.findOne({ id: emp.id})
-    employee.name=emp.name
+    
     const empl = await employeeRepo.save(emp)
     return empl
 }
